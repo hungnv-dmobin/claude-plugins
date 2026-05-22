@@ -11,7 +11,7 @@ Personal [Claude Code](https://claude.com/claude-code) plugin marketplace. Two p
 
 ```bash
 # 1. Add this marketplace (once per machine)
-claude plugin marketplace add <your-github-username>/claude-plugins
+claude plugin marketplace add hungnv-dmobin/claude-plugins
 
 # 2. Install the plugins you want
 claude plugin install android-cook@dmb-plugins
