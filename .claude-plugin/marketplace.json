@@ -1,0 +1,22 @@
+{
+  "name": "dmb-plugins",
+  "owner": {
+    "name": "DMOBIN",
+    "email": "dev.claude.2026@gmail.com"
+  },
+  "metadata": {
+    "description": "Personal Claude Code plugins: Android task orchestration and productivity/brainstorming helpers."
+  },
+  "plugins": [
+    {
+      "name": "android-cook",
+      "source": "./android-cook",
+      "description": "Android task orchestrator with on-device QA. Clarify requirements via Q&A, plan testable subtasks, then run a dev->build->test->fix loop verified on a real device/emulator via mobile-mcp."
+    },
+    {
+      "name": "productivity",
+      "source": "./productivity",
+      "description": "Brainstorming and skill-authoring helpers: grill-me, grill-with-docs, skill-handler, handoff."
+    }
+  ]
+}

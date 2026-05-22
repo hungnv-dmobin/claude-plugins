@@ -1,0 +1,10 @@
+{
+  "name": "productivity",
+  "version": "1.0.0",
+  "description": "Brainstorming and skill-authoring helpers. grill-me and grill-with-docs interview you relentlessly to stress-test a plan or design; skill-handler authors, edits, and audits Claude Code skills; handoff compacts a conversation into a handoff document for another agent.",
+  "author": {
+    "name": "DMOBIN",
+    "email": "dev.claude.2026@gmail.com"
+  },
+  "keywords": ["brainstorming", "planning", "skills", "productivity", "handoff"]
+}

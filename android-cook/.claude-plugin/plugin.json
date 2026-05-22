@@ -1,0 +1,10 @@
+{
+  "name": "android-cook",
+  "version": "1.0.0",
+  "description": "End-to-end Android task orchestrator. The dmb-android-cook skill clarifies requirements via targeted Q&A, breaks work into testable subtasks, then drives a sequential dev->build->test->fix loop using the dmb-android-dev and dmb-android-qa subagents until every subtask passes on a real device. Bundles Clean Architecture, module-creation, and platform-component skills, plus the mobile-mcp server for device QA.",
+  "author": {
+    "name": "DMOBIN",
+    "email": "dev.claude.2026@gmail.com"
+  },
+  "keywords": ["android", "kotlin", "qa", "orchestration", "clean-architecture", "mobile-mcp"]
+}
