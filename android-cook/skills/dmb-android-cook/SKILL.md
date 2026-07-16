@@ -1,25 +1,18 @@
 ---
 name: dmb-android-cook
-description: >
-  End-to-end Android task orchestrator: clarifies requirements via targeted
-  Q&A, breaks work into testable subtasks, then drives a sequential
-  dev→build→test→fix loop using dmb-android-dev and dmb-android-qa subagents until all
-  subtasks pass on device. Runs a final regression sweep and reports effort
-  and rework hotspots. Trigger when the user says "cook this task",
-  "implement and test this Android feature", or gives an Android dev task
-  to build and verify on device.
-when_to_use: >
-  Use for any Android feature, bug-fix, or screen-level enhancement that
-  needs both code implementation and real-device QA verification via
-  mobile-mcp. Covers single-screen changes and multi-screen flows. Not for
-  infrastructure-only work (CI, Gradle config), pure documentation, or
-  non-Android tasks.
+description: End-to-end Android task orchestrator — clarifies requirements, splits into testable subtasks, runs a dev-build-test-fix loop with dmb-android-dev/dmb-android-qa subagents until all pass on device, then a regression sweep. Use for Android features/bug-fixes needing code plus real-device QA; not for CI/Gradle-only or non-Android work. Trigger: "cook this task".
 argument-hint: "<task description>"
 allowed-tools: >
   Read Write Edit Glob Grep Bash
   AskUserQuestion Agent
   TaskCreate TaskUpdate TaskList
 ---
+
+## When to use
+
+End-to-end Android task orchestrator: clarifies requirements via targeted Q&A, breaks work into testable subtasks, then drives a sequential dev→build→test→fix loop using dmb-android-dev and dmb-android-qa subagents until all subtasks pass on device. Runs a final regression sweep and reports effort and rework hotspots. Trigger when the user says "cook this task", "implement and test this Android feature", or gives an Android dev task to build and verify on device.
+
+When to use: Use for any Android feature, bug-fix, or screen-level enhancement that needs both code implementation and real-device QA verification via mobile-mcp. Covers single-screen changes and multi-screen flows. Not for infrastructure-only work (CI, Gradle config), pure documentation, or non-Android tasks.
 
 # DMB Android Cook
 

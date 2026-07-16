@@ -1,24 +1,14 @@
 ---
 name: android-platform-components
 argument-hint: <component-type | "default-sms" | "smsmms" | "permissions" | "widget" | "wallpaper" | "a11y" | "notif-listener" | "launcher" | "overlay" | "shortcuts">
-description: >
-  Implement Android platform components and system integrations: BroadcastReceiver,
-  Service, ContentProvider, AppWidgetProvider, WallpaperService, AccessibilityService,
-  NotificationListenerService, launcher (home) apps, SYSTEM_ALERT_WINDOW overlays,
-  ShortcutManager static/dynamic/pinned shortcuts, SMS-stack handling (Default-SMS
-  role + smsmms integration), and runtime + special permission flows. Trigger when
-  the user says "wire the SMS receiver", "integrate smsmms", "add a home-screen
-  widget", "build a live wallpaper", "register an accessibility service", "listen
-  to notifications", "make the app a launcher", "draw a floating overlay", "pin a
-  shortcut", or "request default SMS role".
-when_to_use: >
-  Use for any Android system integration at the manifest
-  `<service>`/`<receiver>`/`<provider>`/`<activity>` layer that talks to a
-  framework-owned subsystem (telephony, launcher, wallpaper, accessibility,
-  notifications, window manager, shortcuts) on API 29+. Do NOT use for Compose UI
-  (use android-clean-architecture + android-ui-test), Room/DataStore (data layer),
-  or test authoring (android-unit-test).
+description: Implement Android system integrations at the manifest layer — receivers, services, providers, widgets, wallpaper, accessibility, notification listener, launcher, overlays, shortcuts, default-SMS role, permission flows (API 29+). Not for Compose UI, Room/DataStore, or test authoring. Triggers: "add a widget", "integrate smsmms", "make the app a launcher", "draw an overlay".
 ---
+
+## When to use
+
+Implement Android platform components and system integrations: BroadcastReceiver, Service, ContentProvider, AppWidgetProvider, WallpaperService, AccessibilityService, NotificationListenerService, launcher (home) apps, SYSTEM_ALERT_WINDOW overlays, ShortcutManager static/dynamic/pinned shortcuts, SMS-stack handling (Default-SMS role + smsmms integration), and runtime + special permission flows. Trigger when the user says "wire the SMS receiver", "integrate smsmms", "add a home-screen widget", "build a live wallpaper", "register an accessibility service", "listen to notifications", "make the app a launcher", "draw a floating overlay", "pin a shortcut", or "request default SMS role".
+
+When to use: Use for any Android system integration at the manifest `<service>`/`<receiver>`/`<provider>`/`<activity>` layer that talks to a framework-owned subsystem (telephony, launcher, wallpaper, accessibility, notifications, window manager, shortcuts) on API 29+. Do NOT use for Compose UI (use android-clean-architecture + android-ui-test), Room/DataStore (data layer), or test authoring (android-unit-test).
 
 # Android Platform Components
 

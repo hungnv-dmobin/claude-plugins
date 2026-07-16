@@ -1,27 +1,7 @@
 ---
 name: qa-android-mcp-test-runner
 argument-hint: <FEAT-ID | phase-N | "smoke">
-description: >
-  Execute the markdown test plan at `qa/test-cases/<FEAT-ID>.md` directly on a
-  real device or emulator via the `mobile-mcp` server
-  (https://github.com/mobile-next/mobile-mcp). Drives the device through each
-  TC's steps using accessibility-tree snapshots + coordinate taps, asserts
-  expected results, and files every failure as its own `qa/bugs/BUG-XXXX.md`.
-  Read-only on dev source. Model-invocable: the `qa-agent-android` teammate
-  fires this skill autonomously once locale-report is green and the phase
-  reaches the execution gate, the same way it fires `qa-test-runner`. Trigger
-  on "run the mcp test pass", "execute the test plan on device", "drive
-  smoke on the emulator", or "reproduce BUG-NNNN on device".
-when_to_use: >
-  Use as the device-side execution path for `qa/test-cases/<FEAT-ID>.md`
-  plans — complementary to `qa-test-runner` (Gradle/JVM Compose journey
-  tests). Pick this skill for quick smoke validation without compiling
-  Kotlin, for cross-device parity checks, for bug repro on real hardware,
-  or for behaviour the JVM/Robolectric path cannot exercise (telephony,
-  SMS role, launcher, accessibility services). Do NOT use this skill to
-  write Kotlin journey tests (that is `qa-test-runner`). Do NOT use before
-  `qa/locale-report-phase-NN.md` shows `all_clear: true`. Do NOT modify
-  dev source, build scripts, or tests. One bug per failure — never group.
+description: Execute the qa/test-cases/<FEAT-ID>.md test plan on a real device or emulator via mobile-mcp; files each failure as its own qa/bugs/BUG-XXXX.md. Read-only on dev source. Use for device-side smoke, bug repro on hardware, or behaviour JVM tests cannot exercise; requires locale-report all_clear first. Triggers: "run the mcp test pass", "reproduce BUG-NNNN on device".
 allowed-tools: >
   Read Grep Glob Write Edit
   Bash(./gradlew :app:installDebug)
@@ -70,6 +50,12 @@ allowed-tools: >
   mcp__mobile-mcp__mobile_start_screen_recording
   mcp__mobile-mcp__mobile_stop_screen_recording
 ---
+
+## When to use
+
+Execute the markdown test plan at `qa/test-cases/<FEAT-ID>.md` directly on a real device or emulator via the `mobile-mcp` server (https://github.com/mobile-next/mobile-mcp). Drives the device through each TC's steps using accessibility-tree snapshots + coordinate taps, asserts expected results, and files every failure as its own `qa/bugs/BUG-XXXX.md`. Read-only on dev source. Model-invocable: the `qa-agent-android` teammate fires this skill autonomously once locale-report is green and the phase reaches the execution gate, the same way it fires `qa-test-runner`. Trigger on "run the mcp test pass", "execute the test plan on device", "drive smoke on the emulator", or "reproduce BUG-NNNN on device".
+
+When to use: Use as the device-side execution path for `qa/test-cases/<FEAT-ID>.md` plans — complementary to `qa-test-runner` (Gradle/JVM Compose journey tests). Pick this skill for quick smoke validation without compiling Kotlin, for cross-device parity checks, for bug repro on real hardware, or for behaviour the JVM/Robolectric path cannot exercise (telephony, SMS role, launcher, accessibility services). Do NOT use this skill to write Kotlin journey tests (that is `qa-test-runner`). Do NOT use before `qa/locale-report-phase-NN.md` shows `all_clear: true`. Do NOT modify dev source, build scripts, or tests. One bug per failure — never group.
 
 # QA MCP Test Runner
 

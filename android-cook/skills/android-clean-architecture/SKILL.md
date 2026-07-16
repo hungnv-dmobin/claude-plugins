@@ -1,18 +1,14 @@
 ---
 name: android-clean-architecture
 argument-hint: <action> [feature_name]
-description: >
-  Apply Clean Architecture to an Android Gradle project, driven by `aca.json`.
-  Generates code across domain/data/viewmodel/ui/connector layers with MVI and
-  configurable DI (hilt/dagger/koin/pure). Trigger when the user says "add a
-  feature", "scaffold the layers", "refactor to clean architecture", or sets up
-  a project with no `aca.json` yet.
-when_to_use: >
-  Use when adding a feature that spans layers, scaffolding the first
-  `aca.json`, or restructuring code into the Clean Architecture layout. Do NOT
-  use for work confined to a single layer — go direct to the layer-specific
-  skill (android-unit-test, android-ui-test, etc.).
+description: Apply Clean Architecture to an Android Gradle project, driven by aca.json — generates domain/data/viewmodel/ui/connector layers (MVI, DI hilt/dagger/koin/pure). Use for cross-layer features or first-time scaffolding; not for single-layer work. Triggers: "add a feature", "scaffold the layers", "refactor to clean architecture".
 ---
+
+## When to use
+
+Apply Clean Architecture to an Android Gradle project, driven by `aca.json`. Generates code across domain/data/viewmodel/ui/connector layers with MVI and configurable DI (hilt/dagger/koin/pure). Trigger when the user says "add a feature", "scaffold the layers", "refactor to clean architecture", or sets up a project with no `aca.json` yet.
+
+When to use: Use when adding a feature that spans layers, scaffolding the first `aca.json`, or restructuring code into the Clean Architecture layout. Do NOT use for work confined to a single layer — go direct to the layer-specific skill (android-unit-test, android-ui-test, etc.).
 
 # Android Clean Architecture
 

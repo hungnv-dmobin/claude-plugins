@@ -1,20 +1,13 @@
 ---
 name: qa-bug-tracker
-description: >
-  File and track an Android-app bug as `qa/bugs/<BUG-ID>.md` with fixed
-  frontmatter (status, severity, category, assignee, phase_found,
-  phase_fixed?, spec_ref, ac_ref). Encodes the severity ladder
-  (`blocker|major|minor`), the state machine (`open → in-fix → in-verify →
-  closed`), and the merge gate (zero blocker + zero major to tag a phase).
-  Trigger on "file a bug", "open a bug", "log a defect", "track this
-  failure", or when `qa-test-runner` parses a Gradle failure.
-when_to_use: >
-  Use for any AC miss, crash, or behavior deviation found by QA (Layer-3
-  `*JourneyTest.kt` or manual). Also use to update an existing bug's status.
-  One bug per file — never group. Do NOT close as wontfix/duplicate (not in
-  the state machine) — close as `closed` with the reason in the body. Do
-  NOT use for ad-hoc TODOs, refactor backlogs, or feature requests.
+description: File and track one Android bug per qa/bugs/<BUG-ID>.md with fixed frontmatter, severity ladder (blocker|major|minor), state machine open/in-fix/in-verify/closed, and the zero-blocker-major merge gate. Use for QA-found defects and status updates; not for TODOs or feature requests. Triggers: "file a bug", "log a defect".
 ---
+
+## When to use
+
+File and track an Android-app bug as `qa/bugs/<BUG-ID>.md` with fixed frontmatter (status, severity, category, assignee, phase_found, phase_fixed?, spec_ref, ac_ref). Encodes the severity ladder (`blocker|major|minor`), the state machine (`open → in-fix → in-verify → closed`), and the merge gate (zero blocker + zero major to tag a phase). Trigger on "file a bug", "open a bug", "log a defect", "track this failure", or when `qa-test-runner` parses a Gradle failure.
+
+When to use: Use for any AC miss, crash, or behavior deviation found by QA (Layer-3 `*JourneyTest.kt` or manual). Also use to update an existing bug's status. One bug per file — never group. Do NOT close as wontfix/duplicate (not in the state machine) — close as `closed` with the reason in the body. Do NOT use for ad-hoc TODOs, refactor backlogs, or feature requests.
 
 # QA Bug Tracker
 

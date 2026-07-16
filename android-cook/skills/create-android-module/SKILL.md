@@ -1,16 +1,14 @@
 ---
 name: create-android-module
 argument-hint: <module_name> [namespace] [--skip-verify]
-description: >
-  Create a new Android library module in a Gradle Android project. Infers
-  namespace, scaffolds directory + manifest, registers in settings.gradle, and
-  writes build.gradle.kts matching existing modules. Trigger when the user
-  says "add a module", "create a new module", "scaffold an Android library",
-  or names one (e.g. "create a :data module", "add a vpnservice module").
-when_to_use: >
-  Use only for Android Gradle projects. Do NOT use for non-Gradle or
-  non-Android projects.
+description: Create a new Android library module in a Gradle project — infers namespace, scaffolds manifest, registers in settings.gradle, writes build.gradle.kts matching existing modules. Android Gradle projects only. Triggers: "add a module", "create a :data module".
 ---
+
+## When to use
+
+Create a new Android library module in a Gradle Android project. Infers namespace, scaffolds directory + manifest, registers in settings.gradle, and writes build.gradle.kts matching existing modules. Trigger when the user says "add a module", "create a new module", "scaffold an Android library", or names one (e.g. "create a :data module", "add a vpnservice module").
+
+When to use: Use only for Android Gradle projects. Do NOT use for non-Gradle or non-Android projects.
 
 # Create Android Module
 
