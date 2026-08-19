@@ -124,7 +124,7 @@ Gõ **"cook this task: \<mô tả task Android\>"**
 
 Skill hỏi lại chỗ mơ hồ → lập kế hoạch (cần duyệt) → vòng lặp dev (code + build) → QA (chạy app trên device) → fix → smoke test → báo cáo.
 
-**Skills:** `dmb-android-cook`, `qa-android-mcp-test-runner`, `qa-bug-tracker`, `android-clean-architecture`, `create-android-module`, `android-platform-components`
+**Skills:** `dmb-android-cook`, `qa-android-mcp-test-runner`, `qa-bug-tracker`, `android-clean-architecture`, `create-android-module`, `android-platform-components`, `event-tracking-doc`
 
 ### Plugin productivity
 

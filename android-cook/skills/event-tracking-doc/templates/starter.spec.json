@@ -1,0 +1,294 @@
+{
+  "_huong_dan": "Template khởi tạo cho dự án CHƯA có sheet mẫu. Mỗi sheet chỉ khai 'schema' — header/map/độ rộng cột do templates/schemas.json quyết định, không chép tay. Thay TODO bằng giá trị grep được từ code, xoá sheet không dùng, rồi chạy build_event_xlsx.py. Khi đã có workbook chuẩn, thêm 'style_source' ở cấp cao nhất để copy style thật.",
+  "sheets": [
+    {
+      "name": "Event tracking",
+      "blocks": [
+        {
+          "section": "USER PROPERTIES"
+        },
+        {
+          "event": "(user property)",
+          "display": "User properties",
+          "definition": "Thuộc tính mô tả đặc điểm/trạng thái của user, tồn tại ở cấp người dùng, tự đính kèm vào mọi event",
+          "trigger": "- Gán hoặc cập nhật khi user bắt đầu dùng app (lần đầu mở app)\n\n- Cập nhật lại khi trạng thái user thay đổi\n\n- Chỉ lưu giá trị hiện tại tại thời điểm event xảy ra",
+          "params": [
+            {
+              "name": "is_iap_user",
+              "display": "Is IAP user",
+              "defi": "User có phải người dùng trả phí hay không",
+              "dtype": "Number",
+              "ptype": "Property",
+              "values": [
+                [
+                  "0 | 1",
+                  "True (=1), False (=0). Đổi 0 -> 1 sau lần mua IAP đầu tiên",
+                  "",
+                  ""
+                ]
+              ]
+            },
+            {
+              "name": "current_screen",
+              "display": "Current screen",
+              "defi": "Màn hiện tại của user",
+              "dtype": "String",
+              "ptype": "Property",
+              "values": [
+                [
+                  "none",
+                  "Default = none khi chưa xác định",
+                  "",
+                  ""
+                ]
+              ]
+            },
+            {
+              "name": "ab_test_variant",
+              "display": "A/B test variant",
+              "defi": "User thuộc variant A/B test nào",
+              "dtype": "String",
+              "ptype": "Property",
+              "values": [
+                [
+                  "null",
+                  "Khi user không thuộc A/B test nào",
+                  "",
+                  ""
+                ],
+                [
+                  "firebase_exp_1:0",
+                  "Baseline của firebase_exp_1",
+                  "",
+                  ""
+                ],
+                [
+                  "firebase_exp_1:1",
+                  "Variant A của firebase_exp_1",
+                  "",
+                  ""
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "section": "USER JOURNEY"
+        },
+        {
+          "event": "screen_show",
+          "display": "Screen show",
+          "definition": "User đến/ mở ra/ nhìn thấy một màn nào đó trong app",
+          "trigger": "- Trigger khi user đến một màn nào đó\n\n- Chỉ cần trigger với những màn quan trọng/ cần theo dõi\n\n- Không trigger với những màn đã được biểu diễn bằng event khác (ví dụ iap_show, ad_impression)",
+          "params": [
+            {
+              "name": "screen_name",
+              "display": "Screen name",
+              "defi": "Tên của màn mà user đi đến",
+              "dtype": "String",
+              "ptype": "Parameter",
+              "values": [
+                [
+                  "splash",
+                  "TODO: liệt kê từng màn của app",
+                  "",
+                  "điền theo screenName thật trong code"
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "event": "button_click",
+          "display": "Button click",
+          "definition": "User bấm vào một button",
+          "trigger": "- Trigger khi user bấm một button\n\n- Chỉ cần trigger với những button quan trọng/ cần theo dõi\n\n- Không trigger với những hành vi click button đã được biểu diễn bằng event khác (ví dụ screen_go, iap_click, ad_click)",
+          "params": [
+            {
+              "name": "button_name",
+              "display": "Button name",
+              "defi": "Tên của button mà user bấm",
+              "dtype": "String",
+              "ptype": "Parameter",
+              "values": [
+                [
+                  "btn_todo",
+                  "TODO: liệt kê từng button",
+                  "",
+                  "grep buttonName = trong remoteOnClickSingle"
+                ]
+              ]
+            },
+            {
+              "name": "screen_name",
+              "display": "Screen name",
+              "defi": "User bấm button đó tại màn nào",
+              "dtype": "String",
+              "ptype": "Parameter",
+              "values": [
+                [
+                  "{tên các màn}",
+                  "",
+                  "",
+                  ""
+                ]
+              ]
+            },
+            {
+              "name": "overlay_name",
+              "display": "Overlay name",
+              "defi": "User bấm button đó tại overlay nào (nếu button nằm trong popup)",
+              "dtype": "String",
+              "ptype": "Parameter",
+              "values": [
+                [
+                  "{tên các overlay}",
+                  "Bỏ trống nếu button không nằm trong overlay",
+                  "",
+                  ""
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "event": "overlay_show",
+          "display": "Overlay show",
+          "definition": "Dialog/ popup/... được show ra",
+          "trigger": "- Trigger khi dialog/ popup/... được show ra\n\n- Chỉ cần trigger với những overlay quan trọng/ cần theo dõi\n\n- Không trigger với những overlay đã được biểu diễn bằng event khác (ví dụ iap_show, ad_impression)",
+          "params": [
+            {
+              "name": "overlay_name",
+              "display": "Overlay name",
+              "defi": "Tên của overlay",
+              "dtype": "String",
+              "ptype": "Parameter",
+              "values": [
+                [
+                  "dialog_todo",
+                  "TODO: liệt kê từng overlay",
+                  "",
+                  "grep overlayName = trong RemoteOverlayScreen"
+                ]
+              ]
+            },
+            {
+              "name": "screen_name",
+              "display": "Screen name",
+              "defi": "Overlay được hiển thị tại màn nào",
+              "dtype": "String",
+              "ptype": "Parameter",
+              "values": [
+                [
+                  "{tên các màn}",
+                  "",
+                  "",
+                  ""
+                ]
+              ]
+            }
+          ]
+        }
+      ],
+      "schema": "event_tracking"
+    },
+    {
+      "name": "IAP Tracking",
+      "blocks": [
+        {
+          "section": "IAP"
+        },
+        {
+          "event": "iap_show\niap_close\niap_click\niap_purchase\niap_error_show",
+          "display": "IAP events",
+          "definition": "Bộ event vòng đời màn IAP",
+          "trigger": "- iap_show khi màn/popup IAP hiển thị\n\n- iap_close khi user đóng\n\n- iap_click khi user bấm mua\n\n- iap_purchase khi mua thành công",
+          "params": [
+            {
+              "name": "placement",
+              "display": "Placement",
+              "defi": "Vị trí/hoàn cảnh hiển thị gói IAP",
+              "dtype": "String",
+              "ptype": "Parameter",
+              "values": [
+                [
+                  "todo_placement",
+                  "TODO: liệt kê từng vị trí mở paywall",
+                  "",
+                  "grep route paywall / pushEventIapShow"
+                ]
+              ]
+            },
+            {
+              "name": "paywall",
+              "display": "Paywall",
+              "defi": "Màn IAP được show ra là paywall nào",
+              "dtype": "String",
+              "ptype": "Parameter",
+              "values": [
+                [
+                  "subscription",
+                  "Màn subscription",
+                  "",
+                  ""
+                ]
+              ]
+            },
+            {
+              "name": "is_sale",
+              "display": "Is sale",
+              "defi": "Gói có đang sale hay không",
+              "dtype": "Number",
+              "ptype": "Parameter",
+              "values": [
+                [
+                  "0 | 1",
+                  "0 = False, 1 = True",
+                  "",
+                  ""
+                ]
+              ]
+            },
+            {
+              "name": "show_type",
+              "display": "Show type",
+              "defi": "Cách màn IAP được show ra",
+              "dtype": "String",
+              "ptype": "Parameter",
+              "values": [
+                [
+                  "popup",
+                  "Tự show, không cần user bấm",
+                  "",
+                  ""
+                ],
+                [
+                  "click",
+                  "User bấm mới show",
+                  "",
+                  ""
+                ]
+              ]
+            },
+            {
+              "name": "pack_name",
+              "display": "Pack name",
+              "defi": "Tên gói IAP",
+              "dtype": "String",
+              "ptype": "Parameter",
+              "values": [
+                [
+                  "weekly | monthly | yearly | lifetime",
+                  "",
+                  "",
+                  ""
+                ]
+              ]
+            }
+          ]
+        }
+      ],
+      "schema": "iap_tracking"
+    }
+  ]
+}
