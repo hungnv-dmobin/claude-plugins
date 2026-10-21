@@ -30,9 +30,31 @@ fi
 image_abs="$(cd "$(dirname "$image")" && pwd)/$(basename "$image")"
 image_dir="$(dirname "$image_abs")"
 
+# Gemini is told not to run commands, so it cannot measure the file itself; without
+# the size it answers UNSURE to any coordinate question. PIL first, PNG header as fallback.
+size="$(python3 - "$image_abs" <<'PY' 2>/dev/null || true
+import struct, sys
+path = sys.argv[1]
+try:
+    from PIL import Image
+    with Image.open(path) as im:
+        print("%dx%d" % im.size)
+except Exception:
+    with open(path, "rb") as f:
+        head = f.read(24)
+    if head[:8] == b"\x89PNG\r\n\x1a\n":
+        print("%dx%d" % struct.unpack(">II", head[16:24]))
+PY
+)"
+size_line=""
+if [[ -n "$size" ]]; then
+  size_line="The image is ${size} pixels (width x height). Give any coordinates in this pixel space, origin top-left, as the centre of the element.
+"
+fi
+
 prompt="You are a QA assistant reading an Android app screenshot.
 Open and look at this image file: ${image_abs}
-Rules: only view the image; do not run commands, edit or create files.
+${size_line}Rules: only view the image; do not run commands, edit or create files.
 Report only what is visibly on screen. Quote on-screen text verbatim.
 If something cannot be determined from the image, answer UNSURE for it instead of guessing.
 
