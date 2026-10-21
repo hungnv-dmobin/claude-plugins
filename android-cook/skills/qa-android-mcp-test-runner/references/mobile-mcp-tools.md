@@ -45,7 +45,7 @@ If `mobile_list_available_devices` returns an empty list, none of the above is s
 
 | Tool | Purpose | Notes |
 | :--- | :------ | :---- |
-| `mobile_take_screenshot` | Visual snapshot returned to the agent | Slow, large payload. Use as fallback evidence, not primary selector source. |
+| `mobile_take_screenshot` | Visual snapshot returned to the agent | **Do not use** — puts the PNG into the Claude context. Use `mobile_save_screenshot` + `scripts/gemini-vision.sh` instead (SKILL.md rule 5). |
 | `mobile_save_screenshot` | Persist screenshot to a path | Use to attach evidence to `qa/bugs/BUG-XXXX.md`. Save under `qa/evidence/`. |
 | `mobile_list_elements_on_screen` | Accessibility tree of the current screen | **Primary selector source.** Returns text, accessibility id, coordinates, bounds for every interactable element. |
 | `mobile_click_on_screen_at_coordinates` | Single tap at `(x, y)` | Always derive `(x, y)` from `mobile_list_elements_on_screen` element bounds — never guess. |
@@ -75,7 +75,7 @@ If `mobile_list_available_devices` returns an empty list, none of the above is s
 `mobile-mcp` exposes two interaction modes:
 
 1. **Accessibility-tree snapshot** (`mobile_list_elements_on_screen`) — structured, deterministic, fast. Returns one record per interactable element with: visible text, `resource-id` (Android) / `accessibilityIdentifier` (iOS), `content-desc`, bounds, enabled state. **Use this for every selector resolution.**
-2. **Screenshot + coordinate tap** (`mobile_take_screenshot` + `mobile_click_on_screen_at_coordinates`) — visual reasoning over a PNG. Slow, payload-heavy, ambiguous. **Use only when (1) returns nothing for an element the spec requires, and only as a fallback that triggers a missing-accessibility-id bug against UI dev.**
+2. **Screenshot + coordinate tap** (`mobile_save_screenshot` + `scripts/gemini-vision.sh` + `mobile_click_on_screen_at_coordinates`) — Gemini's visual reasoning over a PNG. Slow, payload-heavy, ambiguous. **Use only when (1) returns nothing for an element the spec requires, and only as a fallback that triggers a missing-accessibility-id bug against UI dev.**
 
 The accessibility tree is canonical because:
 
@@ -99,6 +99,6 @@ If the project's `app-overview.md` `locked_constraints` lists iOS, follow the iO
 
 ## Rate / cost considerations
 
-- `mobile_take_screenshot` returns a base64 PNG — easily 200KB+ per call. Use sparingly; prefer `mobile_list_elements_on_screen`.
+- `mobile_take_screenshot` returns a base64 PNG — easily 200KB+ per call, re-billed on every later Claude turn. Never call it; when pixels are needed, `mobile_save_screenshot` and ask Gemini via `scripts/gemini-vision.sh` (~20 s per call, Antigravity quota, not Claude tokens). Prefer `mobile_list_elements_on_screen`.
 - `mobile_list_elements_on_screen` is the right "what's on screen?" call — it is cheap and structured.
 - Screen recordings are large; only record `@flaky`-tagged TCs.

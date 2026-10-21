@@ -26,6 +26,7 @@ allowed-tools: >
   Bash(adb shell screencap *)
   Bash(adb pull *)
   Bash(adb install *)
+  Bash(*/gemini-vision.sh *)
   mcp__plugin_android-cook_mobile-mcp__mobile_list_available_devices
   mcp__plugin_android-cook_mobile-mcp__mobile_get_screen_size
   mcp__plugin_android-cook_mobile-mcp__mobile_get_orientation
@@ -35,7 +36,6 @@ allowed-tools: >
   mcp__plugin_android-cook_mobile-mcp__mobile_terminate_app
   mcp__plugin_android-cook_mobile-mcp__mobile_install_app
   mcp__plugin_android-cook_mobile-mcp__mobile_uninstall_app
-  mcp__plugin_android-cook_mobile-mcp__mobile_take_screenshot
   mcp__plugin_android-cook_mobile-mcp__mobile_save_screenshot
   mcp__plugin_android-cook_mobile-mcp__mobile_list_elements_on_screen
   mcp__plugin_android-cook_mobile-mcp__mobile_click_on_screen_at_coordinates
@@ -80,7 +80,7 @@ References (load only the one matching the work):
 - [`references/execution-patterns.md`](references/execution-patterns.md) — patterns for translating a markdown TC step into MCP calls, element lookup by `testTag` / `content-desc` / text, the `waitUntil` analog (poll-and-retry on `mobile_list_elements_on_screen`), assertion mapping (visible / enabled / text), and crash detection via `mobile_get_crash`.
 - [`references/adb-recipes.md`](references/adb-recipes.md) — `adb` command reference for everything **around** the app that `mobile-mcp` does not expose: fast state resets (`pm clear`, `am force-stop`), permission setup (`pm grant/revoke`), network toggles (`svc wifi/data`), full crash logs (`logcat -b crash`), deep-link firing (`am start -W -d`), screen wake / keyguard dismiss, time / locale notes, and the pre-approved adb command subset. Load this when a TC's precondition is "device in state X" rather than "app in state X".
 
-## Four rules that override anything else
+## Five rules that override anything else
 
 1. **Read-only on dev source.** This skill never edits application Kotlin, XML, build scripts, DI modules, or unit/instrumented tests. The artefact you write is the execution log + bug files; nothing else. If a behaviour cannot be exercised because the UI is missing a `Modifier.testTag` / `contentDescription`, file a `category: technical, severity: minor` bug to UI dev and continue with the next TC — do not edit the screen to make the test pass.
 
@@ -89,6 +89,16 @@ References (load only the one matching the work):
 3. **Execution-gate before invocation.** Mobile-MCP execution has real device side effects (installs APKs, taps elements, types into fields, can dismiss system dialogs). The `qa-agent-android` teammate fires this skill autonomously — same as `qa-test-runner` — but only after the locale-report is green AND `qa_mode ∈ {mcp, both}` AND the phase is at the execution gate. Do not fire on ad-hoc "test this" phrasing; the QA teammate's standing instructions enforce the gate.
 
 4. **One bug per file.** Every failure becomes its own `qa/bugs/BUG-XXXX.md` via the `qa-bug-tracker` schema. Never write a per-feature rollup; never merge two failures into one record. The bug body cites the TC-ID, AC-ID, and the MCP screenshot path (saved during the failure step).
+
+5. **Gemini reads the pixels, not Claude.** Never call `mobile_take_screenshot` — it puts a base64 PNG into the Claude context, where it is re-billed on every later turn. When a check genuinely needs pixels (ad rendered, image/icon shown, colour, layout overlap, text drawn on a Canvas the accessibility tree cannot see), `mobile_save_screenshot` to `qa/evidence/` and ask Gemini:
+
+   ```bash
+   "${CLAUDE_SKILL_DIR}/scripts/gemini-vision.sh" qa/evidence/TC-XXX-step-NN.png "<one narrow question tied to the AC>"
+   ```
+
+   (`${CLAUDE_SKILL_DIR}` = this skill's base directory.) Optional third argument picks the model (`gemini-3.8-flash-low|medium|high`, default medium). Each call takes ~20 s, so batch every question about one screen into a single call and ask for JSON, e.g. `Answer as JSON {"ad_visible": true|false|"UNSURE", "badge_text": ...}`. The script exits `1` on bad input / missing `agy`, `2` when Gemini fails — report that as an environment issue, not an app bug.
+
+   Gemini's answer is second-hand evidence: an `UNSURE`, or an answer that contradicts `mobile_list_elements_on_screen`, makes the AC `BLOCKED` (state why), never `PASS`. Quote the Gemini answer and the screenshot path in the bug body.
 
 ## Inputs
 
@@ -159,6 +169,7 @@ Iterate the markdown body in declared order. For each `### TC-<scope>-NNN — <t
    - "Text shows string key `foo_bar`" → resolve `foo_bar` against `values/strings.xml` for the active locale, then assert that string appears in an element's `text` / `name` field.
    - "Navigates to SCR-…" → assert at least one element with a known anchor selector for that screen is visible.
    - "No error toast / snackbar" → assert no element whose text matches any `R.string.*error*` key (read the spec for the specific keys to negative-match against).
+   - Visual-only outcome ("ad is shown", "icon is red", "image loaded") → `mobile_save_screenshot` + `gemini-vision.sh` per rule 5. Use it only when the accessibility tree cannot answer.
 4. **Capture evidence on failure.** Before filing the bug:
    - `mobile_save_screenshot` to `qa/evidence/BUG-XXXX-step-NN.png`.
    - `mobile_get_crash` — if there is an unhandled crash since launch, attach the stack trace summary to the bug body.
@@ -223,6 +234,7 @@ Do not paste screenshots or MCP element dumps in chat — they go to `qa/evidenc
 - **Running against a stale plan.** Always diff `spec_version` first. The QA agent's diff-and-regenerate contract exists exactly to prevent this.
 - **Asserting on English literals.** The app is i18n from Phase 1; resolve string keys against the **active locale's** `values-<locale>/strings.xml`, not English.
 - **Treating a `BLOCKED` TC as a `FAILED` TC.** Blocked means the device cannot exercise the case (missing accessibility id, missing permission, app not installed); failed means the device exercised it and the result was wrong. The bug categories differ.
-- **Tapping by coordinates that came from a screenshot AI guess.** If `mobile_list_elements_on_screen` returns an element, use its bounds. If it does not, use `mobile_take_screenshot` + visual reasoning **only** as a documented fallback in the bug body — and file a missing-accessibility-id bug against UI dev.
+- **Tapping by coordinates that came from a screenshot AI guess.** If `mobile_list_elements_on_screen` returns an element, use its bounds. If it does not, use `mobile_save_screenshot` + `gemini-vision.sh` (rule 5) **only** as a documented fallback in the bug body — and file a missing-accessibility-id bug against UI dev.
+- **Pulling a screenshot into the Claude context.** `mobile_take_screenshot` is off-limits; see rule 5.
 - **Forgetting `mobile_get_crash` on each failure.** A silent ANR or crash often manifests as "expected element missing"; the crash log gives the real cause.
 - **Re-using a session across phases.** Terminate and reinstall between phase runs to avoid leaked state (drafts, permission grants, notification subscriptions).
