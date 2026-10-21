@@ -1,6 +1,6 @@
 ---
 name: qa-bug-tracker
-description: File and track one Android bug per qa/bugs/<BUG-ID>.md with fixed frontmatter, severity ladder (blocker|major|minor), state machine open/in-fix/in-verify/closed, and the zero-blocker-major merge gate. Use for QA-found defects and status updates; not for TODOs or feature requests. Triggers: "file a bug", "log a defect".
+description: 'File and track one Android bug per qa/bugs/<BUG-ID>.md with fixed frontmatter, severity ladder (blocker|major|minor), state machine open/in-fix/in-verify/closed, and the zero-blocker-major merge gate. Use for QA-found defects and status updates; not for TODOs or feature requests. Triggers: "file a bug", "log a defect".'
 ---
 
 ## When to use

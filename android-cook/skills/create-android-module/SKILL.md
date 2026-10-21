@@ -1,7 +1,7 @@
 ---
 name: create-android-module
 argument-hint: <module_name> [namespace] [--skip-verify]
-description: Create a new Android library module in a Gradle project — infers namespace, scaffolds manifest, registers in settings.gradle, writes build.gradle.kts matching existing modules. Android Gradle projects only. Triggers: "add a module", "create a :data module".
+description: 'Create a new Android library module in a Gradle project — infers namespace, scaffolds manifest, registers in settings.gradle, writes build.gradle.kts matching existing modules. Android Gradle projects only. Triggers: "add a module", "create a :data module".'
 ---
 
 ## When to use

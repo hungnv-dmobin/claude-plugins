@@ -1,6 +1,6 @@
 ---
 name: dmb-android-cook
-description: End-to-end Android task orchestrator — clarifies requirements, splits into testable subtasks, runs a dev-build-test-fix loop with dmb-android-dev/dmb-android-qa subagents until all pass on device, then a regression sweep. Use for Android features/bug-fixes needing code plus real-device QA; not for CI/Gradle-only or non-Android work. Trigger: "cook this task".
+description: 'End-to-end Android task orchestrator — clarifies requirements, splits into testable subtasks, runs a dev-build-test-fix loop with dmb-android-dev/dmb-android-qa subagents until all pass on device, then a regression sweep. Use for Android features/bug-fixes needing code plus real-device QA; not for CI/Gradle-only or non-Android work. Trigger: "cook this task".'
 argument-hint: "<task description>"
 allowed-tools: >
   Read Write Edit Glob Grep Bash

@@ -1,7 +1,7 @@
 ---
 name: qa-android-mcp-test-runner
 argument-hint: <FEAT-ID | phase-N | "smoke">
-description: Execute the qa/test-cases/<FEAT-ID>.md test plan on a real device or emulator via mobile-mcp; files each failure as its own qa/bugs/BUG-XXXX.md. Read-only on dev source. Use for device-side smoke, bug repro on hardware, or behaviour JVM tests cannot exercise; requires locale-report all_clear first. Triggers: "run the mcp test pass", "reproduce BUG-NNNN on device".
+description: 'Execute the qa/test-cases/<FEAT-ID>.md test plan on a real device or emulator via mobile-mcp; files each failure as its own qa/bugs/BUG-XXXX.md. Read-only on dev source. Use for device-side smoke, bug repro on hardware, or behaviour JVM tests cannot exercise; requires locale-report all_clear first. Triggers: "run the mcp test pass", "reproduce BUG-NNNN on device".'
 allowed-tools: >
   Read Grep Glob Write Edit
   Bash(./gradlew :app:installDebug)
@@ -26,29 +26,29 @@ allowed-tools: >
   Bash(adb shell screencap *)
   Bash(adb pull *)
   Bash(adb install *)
-  mcp__mobile-mcp__mobile_list_available_devices
-  mcp__mobile-mcp__mobile_get_screen_size
-  mcp__mobile-mcp__mobile_get_orientation
-  mcp__mobile-mcp__mobile_set_orientation
-  mcp__mobile-mcp__mobile_list_apps
-  mcp__mobile-mcp__mobile_launch_app
-  mcp__mobile-mcp__mobile_terminate_app
-  mcp__mobile-mcp__mobile_install_app
-  mcp__mobile-mcp__mobile_uninstall_app
-  mcp__mobile-mcp__mobile_take_screenshot
-  mcp__mobile-mcp__mobile_save_screenshot
-  mcp__mobile-mcp__mobile_list_elements_on_screen
-  mcp__mobile-mcp__mobile_click_on_screen_at_coordinates
-  mcp__mobile-mcp__mobile_double_tap_on_screen
-  mcp__mobile-mcp__mobile_long_press_on_screen_at_coordinates
-  mcp__mobile-mcp__mobile_swipe_on_screen
-  mcp__mobile-mcp__mobile_type_keys
-  mcp__mobile-mcp__mobile_press_button
-  mcp__mobile-mcp__mobile_open_url
-  mcp__mobile-mcp__mobile_get_crash
-  mcp__mobile-mcp__mobile_list_crashes
-  mcp__mobile-mcp__mobile_start_screen_recording
-  mcp__mobile-mcp__mobile_stop_screen_recording
+  mcp__plugin_android-cook_mobile-mcp__mobile_list_available_devices
+  mcp__plugin_android-cook_mobile-mcp__mobile_get_screen_size
+  mcp__plugin_android-cook_mobile-mcp__mobile_get_orientation
+  mcp__plugin_android-cook_mobile-mcp__mobile_set_orientation
+  mcp__plugin_android-cook_mobile-mcp__mobile_list_apps
+  mcp__plugin_android-cook_mobile-mcp__mobile_launch_app
+  mcp__plugin_android-cook_mobile-mcp__mobile_terminate_app
+  mcp__plugin_android-cook_mobile-mcp__mobile_install_app
+  mcp__plugin_android-cook_mobile-mcp__mobile_uninstall_app
+  mcp__plugin_android-cook_mobile-mcp__mobile_take_screenshot
+  mcp__plugin_android-cook_mobile-mcp__mobile_save_screenshot
+  mcp__plugin_android-cook_mobile-mcp__mobile_list_elements_on_screen
+  mcp__plugin_android-cook_mobile-mcp__mobile_click_on_screen_at_coordinates
+  mcp__plugin_android-cook_mobile-mcp__mobile_double_tap_on_screen
+  mcp__plugin_android-cook_mobile-mcp__mobile_long_press_on_screen_at_coordinates
+  mcp__plugin_android-cook_mobile-mcp__mobile_swipe_on_screen
+  mcp__plugin_android-cook_mobile-mcp__mobile_type_keys
+  mcp__plugin_android-cook_mobile-mcp__mobile_press_button
+  mcp__plugin_android-cook_mobile-mcp__mobile_open_url
+  mcp__plugin_android-cook_mobile-mcp__mobile_get_crash
+  mcp__plugin_android-cook_mobile-mcp__mobile_list_crashes
+  mcp__plugin_android-cook_mobile-mcp__mobile_start_screen_recording
+  mcp__plugin_android-cook_mobile-mcp__mobile_stop_screen_recording
 ---
 
 ## When to use

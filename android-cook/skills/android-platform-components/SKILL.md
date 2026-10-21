@@ -1,7 +1,7 @@
 ---
 name: android-platform-components
 argument-hint: <component-type | "default-sms" | "smsmms" | "permissions" | "widget" | "wallpaper" | "a11y" | "notif-listener" | "launcher" | "overlay" | "shortcuts">
-description: Implement Android system integrations at the manifest layer — receivers, services, providers, widgets, wallpaper, accessibility, notification listener, launcher, overlays, shortcuts, default-SMS role, permission flows (API 29+). Not for Compose UI, Room/DataStore, or test authoring. Triggers: "add a widget", "integrate smsmms", "make the app a launcher", "draw an overlay".
+description: 'Implement Android system integrations at the manifest layer — receivers, services, providers, widgets, wallpaper, accessibility, notification listener, launcher, overlays, shortcuts, default-SMS role, permission flows (API 29+). Not for Compose UI, Room/DataStore, or test authoring. Triggers: "add a widget", "integrate smsmms", "make the app a launcher", "draw an overlay".'
 ---
 
 ## When to use
